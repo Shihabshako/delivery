@@ -31,7 +31,7 @@
                 <th>Delivery Boy Details</th>  
                 <th>Referrer Details</th> 
                 <th>Referrer NID</th> 
-                <th>Additional Details</th> 
+                <th>information's</th> 
             </tr>
         </thead>
         <tbody>
@@ -40,6 +40,7 @@
 
             ?>
             
+
             <tr>
                 <td class="align-middle">
                     <?= $row['id'] ?>
