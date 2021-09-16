@@ -30,6 +30,10 @@
    $list_expenses = get_all_dropdowns('expenses');
    $list_admins = get_all_dropdowns('admins');
    $list_payments = get_all_dropdowns('parcels_all');
+   $list_paid_amount = get_all_dropdowns('parcels_all');
+   $list_unpaid_amount = get_all_dropdowns('parcels_all');
+   $list_cod_percentage = get_all_dropdowns('cod_percentage');
+   $list_salary = get_all_dropdowns('salary');
 
 
 
@@ -211,28 +215,28 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </li>
               
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="./?page=paid_amount" class="nav-link">
                   <i class="fas fa-hands-helping nav-icon"></i>
                   <p>Paid Amount</p>
                 </a>
               </li>
               
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="./?page=unpaid_amount" class="nav-link">
                   <i class="fas fa-handshake-alt-slash nav-icon"></i>
                   <p>Unpaid Amount</p>
                 </a>
               </li>
               
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="./?page=cod_percentage" class="nav-link">
                   <i class="fas fa-percentage nav-icon"></i>
                   <p>COD percentage</p>
                 </a>
               </li>
               
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="./?page=salary" class="nav-link">
                   <i class="fas fa-coins nav-icon"></i>
                   <p>Salary</p>
                 </a>

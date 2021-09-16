@@ -39,7 +39,19 @@
             case 'pickup_address_per_user':
                 $query = "SELECT * FROM pickup_address AS pa JOIN users AS us ON pa.user_id=us.id WHERE us.shop_email='$user_email'";
                 break;
+
+                
+            case 'cod_percentage':
+                $query = "SELECT uc.* FROM users AS us JOIN user_charges AS uc ON us.id=uc.user_id";
+                break;
+
+
             
+            case 'salary':
+                $query = "SELECT *, DATE_FORMAT(sal.date, '%b, %Y') AS 'month' ,  sal.pct_per_parcel AS pct FROM salary AS sal JOIN delivery_boys AS db ON sal.delivery_boy_id = db.id WHERE MONTH(sal.date) = MONTH(CURDATE())";
+                break;
+
+
             
             default:
                 $query = "SELECT * FROM $dropdown_name";

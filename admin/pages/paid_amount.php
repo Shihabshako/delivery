@@ -25,7 +25,7 @@
         </thead>
         <tbody>
             <?php 
-            foreach ($list_unpaid_amount as $row) {
+            foreach ($list_paid_amount as $row) {
               if(get_parcel_status_for_payment('Paid', $row['id']) == ''){
                 continue;
               }
