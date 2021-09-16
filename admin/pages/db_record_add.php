@@ -98,8 +98,12 @@
             $basic_salary = $_POST['basic_salary'];
             $monthly_target = $_POST['monthly_target'];
             $pct_per_parcel = $_POST['pct_per_parcel'];
+            $current_date = date("Y-m-d");
 
             $query = "INSERT INTO `delivery_boys` VALUES ($id,'$full_name','$boy_id', '$address','$phone_number','$nid_number', '$referrer_name','$referrer_phone_number','$referrer_address','$referrer_nid', $basic_salary, $monthly_target,$pct_per_parcel)";
+
+            
+            mysqli_query($con, "INSERT INTO `salary`( `delivery_boy_id`, `date`,`done`, `target`,`pct_per_parcel`, `pct_amount`, `total_salary`) VALUES ($id, '$current_date', 0,$monthly_target, $pct_per_parcel,0, $basic_salary)");
 
             if(mysqli_query($con,$query)){
                 $_SESSION['add_delivery_boy'] = 'success';
