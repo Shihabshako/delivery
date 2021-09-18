@@ -455,6 +455,66 @@
 
     }
 
+    function salary_update($status,$parcel_id){
+         global $con;
+        switch ($status) {
+            case 'delivered':
+                $update_delivery_details = "SELECT sal.done, sal.target, pkg.price, sal.pct_amount, db.basic_salary, sal.delivery_boy_id AS 'db_id' FROM salary AS sal JOIN assign_parcels AS ap ON sal.delivery_boy_id = ap.delivery_boy_id JOIN parcels AS prcl ON ap.parcel_id = prcl.id JOIN packages AS pkg ON prcl.pkg_id = pkg.id JOIN delivery_boys AS db ON sal.delivery_boy_id = db.id WHERE ap.parcel_id = $parcel_id AND MONTH(sal.date) = MONTH(CURDATE())";
+
+                $update_delivery_details = mysqli_fetch_array(mysqli_query($con, $update_delivery_details));
+
+                $delivery_boy_id = $update_delivery_details['db_id'];
+                $done_delivery = $update_delivery_details['done'];
+                $target_delivery = $update_delivery_details['target'];
+                $basic_salary = $update_delivery_details['basic_salary'];
+                $pkg_price = $update_delivery_details['price'];
+                $pct_amount = $update_delivery_details['pct_amount'];
+                
+                $done_delivery++;
+                $pct_parcel =  $done_delivery >  $target_delivery ? 10 : 5;
+                $pct_parcel_by_hundred = $pct_parcel / 100;
+
+                $current_pct_amount = $pkg_price * $pct_parcel_by_hundred;
+                $pct_amount += $current_pct_amount ;
+                $total_salary =  $basic_salary+ $pct_amount;
+
+
+                $salary_update = "UPDATE salary SET `done`=$done_delivery,`pct_per_parcel`= $pct_parcel, `pct_amount`=$pct_amount, `total_salary`=$total_salary WHERE delivery_boy_id=$delivery_boy_id AND MONTH(date) = MONTH(CURDATE())";
+
+                mysqli_query($con, $salary_update);
+                break;
+            
+            case 'undo_delivered':
+                $update_delivery_details = "SELECT sal.done, sal.target, pkg.price, sal.pct_amount, db.basic_salary, sal.delivery_boy_id AS 'db_id' FROM salary AS sal JOIN assign_parcels AS ap ON sal.delivery_boy_id = ap.delivery_boy_id JOIN parcels AS prcl ON ap.parcel_id = prcl.id JOIN packages AS pkg ON prcl.pkg_id = pkg.id JOIN delivery_boys AS db ON sal.delivery_boy_id = db.id WHERE ap.parcel_id = $parcel_id AND MONTH(sal.date) = MONTH(CURDATE())";
+
+                $update_delivery_details = mysqli_fetch_array(mysqli_query($con, $update_delivery_details));
+
+                $delivery_boy_id = $update_delivery_details['db_id'];
+                $done_delivery = $update_delivery_details['done'];
+                $target_delivery = $update_delivery_details['target'];
+                $basic_salary = $update_delivery_details['basic_salary'];
+                $pkg_price = $update_delivery_details['price'];
+                $pct_amount = $update_delivery_details['pct_amount'];
+                
+                $done_delivery--;
+                $pct_parcel =  $done_delivery >  $target_delivery ? 10 : 5;
+                $pct_parcel_by_hundred = $pct_parcel / 100;
+
+                $current_pct_amount = $pkg_price * $pct_parcel_by_hundred;
+                $pct_amount -= $current_pct_amount ;
+                $total_salary =  $basic_salary + $pct_amount;
+
+
+                $salary_update = "UPDATE salary SET `done`=$done_delivery,`pct_per_parcel`= $pct_parcel, `pct_amount`=$pct_amount, `total_salary`=$total_salary WHERE delivery_boy_id=$delivery_boy_id AND MONTH(date) = MONTH(CURDATE())";
+
+                mysqli_query($con, $salary_update);
+                break;
+            
+            default:
+                # code...
+                break;
+        }
+    }
     //echo  get_parcel_status_for_payment('Pending Parcel', 1);
    // echo count_admin_stats('total_pending_return');
 

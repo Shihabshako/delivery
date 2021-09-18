@@ -218,6 +218,7 @@
         // false = left option
         if(!confirm("Are you sure?")){
             switch_status.checked = !switch_status.checked;
+            $("#tbody_to_refresh").load(location.href+" #tbody_to_refresh>*",""); 
             return;
         }
         switch_status = switch_status.checked ? 'right' : 'left';
@@ -226,11 +227,13 @@
         
 
         if(slot == 'onTheWay'){
-            
-            $('#add_boy_to_parcel_modal').modal('show');
-            $('#track_id').val(trackId);
-            $('#memo_number').val(memo_id);            
-            $('#parcel_id_in_modal').val(parcel_id);            
+            if(switch_status == 'right'){
+                $('#add_boy_to_parcel_modal').modal('show');
+                $('#track_id').val(trackId);
+                $('#memo_number').val(memo_id);            
+                $('#parcel_id_in_modal').val(parcel_id);
+            }
+                        
         }
         
         $.ajax({
@@ -244,7 +247,7 @@
                 },
                 dataType:"TEXT",
                 success:function(response){    
-                    console.log(response.trim())       
+                    console.log(response)       
                     if(response.trim() == 'success'){
                         $("#tbody_to_refresh").load(location.href+" #tbody_to_refresh>*",""); 
                     } 

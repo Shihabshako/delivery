@@ -3,7 +3,7 @@
         session_start();
     }
 
-    if(isset($_SESSION['user_email']) && $_SESSION['is_merchant']){
+    if(isset($_SESSION['user_email']) && isset($_SESSION['is_merchant'])){
         header('location: ./dashboard/');   
     }
 

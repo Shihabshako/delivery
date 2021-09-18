@@ -41,7 +41,7 @@
                         /
                     <span class="text-dark <?= $row['done'] < $row['target']  ? 'h5' : 'h6' ?>"><?= $row['target'] ?></span>
                 </td>
-                <td class="align-middle"><?= $row['pct'] ?> </td>
+                <td class="align-middle"><?= $row['pct'] ?> % </td>
                 <td class="align-middle"><?= $row['pct_amount'] ?> </td>
                 <td class="align-middle"><?= $row['total_salary'] ?> </td>
                 

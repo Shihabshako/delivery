@@ -287,44 +287,23 @@
                 $phone_number = "88".$merchant_details['pickup_phone'];
                 $message = "Your parcel has been successfully delivered by TDG. Track: https://thedeliveryguy.com.bd/track_parcel.php ";
 
-                $update_delivery_details = "SELECT * FROM salary AS sal JOIN assign_parcels AS ap ON sal.delivery_boy_id = ap.delivery_boy_id JOIN parcels AS prcl ON ap.parcel_id = prcl.id JOIN packages AS pkg ON prcl.pkg_id = pkg.id WHERE ap.parcel_id = 1 AND MONTH(sal.date) = MONTH(CURDATE())";
-
-                $update_delivery_details = mysqli_fetch_array(mysqli_fetch_array($con, $update_delivery_details));
-
-                $delivery_boy_id = $update_delivery_details['delivery_boy_id'];
-
-                $done_delivery = $update_delivery_details['done'];
-                $target_delivery = $update_delivery_details['target'];
-                $basic_salary = $update_delivery_details['basic_salary'];
-                $done_delivery++;
-                $pct_parcel =  $done_delivery >  $target_delivery ? 10 : 5;
-
-                $pct_parcel /= 100;
-
-                $pkg_price = $update_delivery_details['price'];
-                $pct_amount = $update_delivery_details['pct_amount'];
-
-                $current_pct_amount = $pkg_price * $pct_parcel;
-
-                $pct_amount += $current_pct_amount ;
-
-                $total_salary =  $basic_salary+ $pct_amount;
-
-                $salary_update = "UPDATE salary SET `done`=$done_delivery,`pct_per_parcel`= $pct_parcel, `pct_amount`=$pct_amount, $total_salary=$total_salary WHERE delivery_boy_id=$delivery_boy_id AND MONTH(date) = MONTH(CURDATE())";
-
-                mysqli_query($con, $salary_update);
+                
 
 
                 if($switch_status == 'right'){
                     $query = "UPDATE parcel_status AS ps JOIN status AS st ON ps.status_id = st.id SET ps.status = 1 WHERE ps.parcel_id = $parcel_id AND st.status='Delivered'";
-                    send_sms($phone_number, $message);
+                    salary_update('delivered',$parcel_id);
+                   //send_sms($phone_number, $message);
                     
                 }else{
                     $query = "UPDATE parcel_status AS ps JOIN status AS st ON ps.status_id = st.id SET ps.status = 0 WHERE ps.parcel_id = $parcel_id AND st.status='Delivered'";
-    
+                    salary_update('undo_delivered',$parcel_id);
                 }
-                $bool = mysqli_query($con, $query);
 
+                $bool = mysqli_query($con, $query);
+                
+
+               
                 break;
 
             case 'is_returnable':
@@ -335,11 +314,13 @@
 
                 if($switch_status == 'right'){
                     $query1 = "UPDATE parcel_status AS ps JOIN status AS st ON ps.status_id = st.id SET ps.status = 1 WHERE ps.parcel_id = $parcel_id AND st.status='Pending Return'";
-                    send_sms($phone_number, $message);
+                     salary_update('delivered',$parcel_id);
+                    //send_sms($phone_number, $message);
                     mysqli_query($con, $query1);
                 }else{
                     $query1 = "UPDATE parcel_status AS ps JOIN status AS st ON ps.status_id = st.id SET ps.status = 0 WHERE ps.parcel_id = $parcel_id AND st.status='Pending Return'";
                     $query2 = "UPDATE parcel_status AS ps JOIN status AS st ON ps.status_id = st.id SET ps.status = 0 WHERE ps.parcel_id = $parcel_id AND st.status='Returned'";
+                    salary_update('undo_delivered',$parcel_id);
                    
                     $bool = mysqli_query($con, $query1);
                     $bool = mysqli_query($con, $query2);
@@ -369,6 +350,9 @@
                     //send_sms('8801706822418', 'Your parcel has been delivered');
                 }else{
                     $query = "UPDATE parcel_status AS ps JOIN status AS st ON ps.status_id = st.id SET ps.status = 0 WHERE ps.parcel_id = $parcel_id AND st.status='On the way'";
+
+                    
+                   $bool = mysqli_query($con, "DELETE FROM assign_parcels WHERE parcel_id=$parcel_id");
     
                 }
                  $bool = mysqli_query($con, $query);
@@ -382,6 +366,9 @@
                 # code...
                 break;
         }
+
+        // echo $custom;
+        // return;
 
         echo $bool ? 'success' : 'error';
         return;

@@ -200,7 +200,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <p>Payment</p>
                 </a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item ">
                 <a href="#" class="nav-link">
                   <i class="fas fa-layer-group nav-icon"></i>
                   <p>Total amount</p>

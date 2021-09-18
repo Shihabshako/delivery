@@ -62,6 +62,7 @@
             success:function(response){
                 //$("#tbody_to_refresh").load(location.href+" #tbody_to_refresh>*",""); 
                 $('#add_boy_to_parcel_modal').modal('hide');
+                $("#tbody_to_refresh").load(location.href+" #tbody_to_refresh>*",""); 
                 
             }
         });
