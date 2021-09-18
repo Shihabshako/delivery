@@ -101,7 +101,7 @@
             </div>
             <div class="form-group">
                 <label >Cash Collection (Without delivery charge)</label> <span class="text-danger">*</span>
-                <input class="form-control" type="number" step="0.01" onchange="product_price_update()" onkeyup="product_price_update()" name="cash_collection" id="cash_collection" value="0" required>
+                <input class="form-control" type="number"  onchange="product_price_update()" onkeyup="product_price_update()" name="cash_collection" id="cash_collection" value="0" required>
             </div>
             <div class="form-group mt-md-5 mt-3">
                 <input class="btn btn-default form-control custom-button"  type="submit" value="Create" required>
@@ -199,7 +199,8 @@
     }
 
     function product_price_update(){
-        let cash_collection = parseFloat($('#cash_collection').val()) ? parseFloat($('#cash_collection').val()) : 0;
+        console.log($('#cash_collection').val())
+        let cash_collection = $('#cash_collection').val() != "" ? parseFloat($('#cash_collection').val()) : 0;
         $('#cash_collection_summery').text(cash_collection.toFixed(2));
         total_amount_update();
         
