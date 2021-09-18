@@ -199,7 +199,7 @@
     }
 
     function product_price_update(){
-        let cash_collection = parseFloat($('#cash_collection').val()) ? parseFloat($('#cash_collection').val()) : parseFloat(0).toFixed(2);
+        let cash_collection = parseFloat($('#cash_collection').val()) ? parseFloat($('#cash_collection').val()) : 0;
         $('#cash_collection_summery').text(cash_collection.toFixed(2));
         total_amount_update();
         

@@ -361,7 +361,7 @@
                 break;
             
             case 'total_delivery_boy':
-                $query = "";
+                $query = "SELECT COUNT(*) AS 'count' FROM delivery_boys";
                 break;
             
             
