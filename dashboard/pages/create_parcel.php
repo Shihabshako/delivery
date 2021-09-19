@@ -99,6 +99,7 @@
                     ?>
                 </select>
             </div>
+            
             <div class="form-group">
                 <label >Cash Collection (Without delivery charge)</label> <span class="text-danger">*</span>
                 <input class="form-control" type="number"  onchange="product_price_update()" onkeyup="product_price_update()" name="cash_collection" id="cash_collection" value="0" required>

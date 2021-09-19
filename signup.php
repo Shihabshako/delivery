@@ -152,9 +152,45 @@
                                 <label >Pickup Address</label>
                                 <input class="form-control" type="text" name="pickup_address" required>
                             </div>
-                            <div class="form-group">
-                                <label >Pickup Phone</label>
-                                <input class="form-control" type="number" name="pickup_phone" required>
+                            <div class="row">
+                                <!-- <div class="form-group col-8">
+                                    <label >Pickup Phone</label>
+                                    <input class="form-control" type="number" name="pickup_phone" required>
+                                </div> -->
+                                <div class="form-group col-8">
+                                    <label for="">Pickup Phone</label>
+                                    <div class="input-group">
+                                        <input 
+                                            type="number" 
+                                            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" 
+                                            maxlength = "11"
+                                            class="form-control" 
+                                            name="pickup_phone" 
+                                            id="pickup_phone" 
+                                            placeholder="017XXXXXXXX"
+                                            >
+                                        <div class="input-group-append" onclick="phoneAuth()" id="sign-in-button">
+                                            <div class="input-group-text symbol btn btn-info"  ><span  >Send OTP</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-4">
+                                    <label >OTP</label>
+                                    <input  
+                                        class="form-control" 
+                                        type="number" 
+                                        oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" 
+                                        maxlength = "6"
+                                        placeholder="123456" 
+                                        onkeyup="verifyPhoneNumber(this.value)" 
+                                        name="otp" 
+                                        required
+                                        id="otp"
+                                    >
+                                </div>
+                            </div>
+                            <div class="row text-center">
+                                <div class="recaptcha-container" id="recaptcha-container"></div>
                             </div>
                             <div class="form-group">
                                 <label >Password</label>
@@ -201,10 +237,14 @@
                                 <label >Confirm Password</label>
                                 <input class="form-control" type="password" name="confirm_password" required>
                             </div><br>
-                            <div class="form-group text-right mt-3">
-                                <input class="btn btn-light mr-3" onclick="location.href='index.php'" type="button" value="Cancel">
-                                <input class="btn btn-default custom-button"  type="submit" value="Register">
+                            <div class="row mt-2">
+                                <div class="col-6"></div>
+                                <div class="form-group text-right col-6">
+                                    <input class="btn btn-light mr-3" onclick="location.href='index.php'" type="button" value="Cancel">
+                                    <input class="btn btn-default custom-button" id="registerButton"  type="submit" value="Register" disabled>
+                                </div>        
                             </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -222,21 +262,40 @@
 
 
 
+     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>                    
 
-
-      
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
+    
     <script>
         $(document).ready(function() {
             $('.js-example-basic-single').select2();
             $('.select2').select2();
         });
     </script>
+<script src="https://www.gstatic.com/firebasejs/8.3.2/firebase.js"></script>
+
+<!-- firebase_configuration -->
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyD-YT-F1cpWb2IAHPVVeCxjRc35A2-w_Sg",
+    authDomain: "deliveryguy-v1.firebaseapp.com",
+    projectId: "deliveryguy-v1",
+    storageBucket: "deliveryguy-v1.appspot.com",
+    messagingSenderId: "849032394754",
+    appId: "1:849032394754:web:c628529fe121e1514c8f1b",
+    measurementId: "G-HYHN9F4WCB"
+  };
+
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+ firebase.analytics();
+</script>
+<script src="js/firebase.js" type="text/javascript"></script>
+
 
   </body>
 </html>

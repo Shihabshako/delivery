@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Fast Delivery</title>
+    <title>The Delivery guy</title>
     <!-- fav icon -->
     <link rel="shortcut icon" href="img/favicon.png" type="image/x-icon">
     <!--  bootstrap css -->

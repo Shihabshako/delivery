@@ -220,7 +220,7 @@
 
     function counting_stats($criteria){
         global $con;
-        $user_email = $_SESSION['user_email'];
+        $user_email =$_SESSION['user_email'];
         $uid = get_user_id($user_email);
         switch ($criteria) {
             case 'order_placed':
@@ -228,7 +228,27 @@
                 break;
             
             case 'order_in_transit':
-                $query = "SELECT COUNT(*) AS 'count' FROM parcel_status AS ps JOIN status AS st ON ps.status_id=st.id WHERE `user_id`=$uid AND st.status='Pending pickup' AND ps.status=1";
+               
+                $list_parcels_count = get_all_dropdowns('parcels', $user_email);
+                $counter = 0;
+                foreach ($list_parcels_count as $value) {
+                    $parcel_id = $value['id'];
+                    $bool = TRUE;
+                    $query = "SELECT  ps.status FROM parcel_status AS ps JOIN STATUS AS st ON ps.status_id = st.id WHERE `user_id` = $uid AND ps.parcel_id=$parcel_id AND ( st.status = 'Delivered' OR st.status = 'Returned' OR st.status = 'Pending Return' )";
+
+                    //echo $query."\n";
+                    $result = mysqli_query($con, $query);
+
+                    while($row = mysqli_fetch_array($result)){
+                        if($row['status'] == 1)
+                            $bool = FALSE;
+                    }
+
+                    if($bool)
+                        $counter++;
+
+                }
+                return $counter;
                 break;
             
             case 'order_delivered':
@@ -256,6 +276,10 @@
             case 'total_sales':
                 $query = "SELECT SUM(dcd.cash_collection) AS 'count' FROM delivery_charge_details AS dcd JOIN parcels AS prcl ON dcd.parcel_id=prcl.id WHERE prcl.`user_id`=$uid";
                 break;
+
+            case 'total_cod_charge':
+                $query = "SELECT IF(SUM(dcd.cod_charge),SUM(dcd.cod_charge),0) AS 'count' FROM delivery_charge_details AS dcd JOIN parcels AS prcl ON dcd.parcel_id=prcl.id JOIN parcel_status AS ps ON ps.parcel_id=prcl.id JOIN status AS st ON ps.status_id = st.id WHERE st.status='Delivered' AND prcl.`user_id`=$uid AND ps.status=1";
+                break;
             
             case 'total_delivery_fees_paid':
                 $query = "SELECT IF(SUM(dcd.delivery_charge+dcd.cod_charge),SUM(dcd.delivery_charge+dcd.cod_charge),0) AS 'count' FROM parcels AS p JOIN parcel_status AS ps ON ps.parcel_id = p.id JOIN STATUS AS st ON ps.status_id = st.id JOIN packages AS pkg ON p.pkg_id = pkg.id JOIN delivery_charge_details dcd ON p.id = dcd.parcel_id WHERE st.status = 'Delivered' AND ps.status = 1 AND p.user_id=$uid";
@@ -266,7 +290,7 @@
                 break;
             
             case 'payment_processing':
-                $query = "SELECT IF(SUM(dcd.seller_will_get),SUM(dcd.seller_will_get),0) AS 'count' FROM delivery_charge_details AS dcd JOIN parcels AS prcl ON dcd.parcel_id=prcl.id JOIN parcel_status AS ps ON ps.parcel_id=prcl.id JOIN status AS st ON ps.status_id = st.id WHERE st.status='Pending Pickup' AND prcl.`user_id`=$uid AND ps.status=1";
+                $query = "SELECT IF(SUM(dcd.seller_will_get),SUM(dcd.seller_will_get),0) AS 'count' FROM delivery_charge_details AS dcd JOIN parcels AS prcl ON dcd.parcel_id=prcl.id JOIN parcel_status AS ps ON ps.parcel_id=prcl.id JOIN status AS st ON ps.status_id = st.id WHERE st.status='Delivered' AND prcl.`user_id`=$uid AND ps.status=1";
                 break;
 
             case 'expenses':
@@ -281,6 +305,8 @@
         $result = mysqli_fetch_array(mysqli_query($con, $query));
         return $result['count'] ? $result['count'] : 0;
     }
+
+
 
     function get_status_by_parcel($parcel_id){
         global $con;

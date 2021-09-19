@@ -32,7 +32,7 @@
                 <p>Order in Transit</p>
             </div>
             <div class="icon">
-                <i class="fas fa-dolly"></i>
+                <i class="fas fa-truck-moving"></i>
             </div>
         </div>
     </div>
@@ -52,13 +52,13 @@
     <!-- ./col -->
     <div class="col-lg-3 col-6">
         <!-- small card -->
-        <div class="small-box bg-danger">
+        <div class="small-box bg-secondary">
             <div class="inner">
                 <h3><?= counting_stats('order_to_be_returned') ?></h3>
                 <p>Order to be returned</p>
             </div>
             <div class="icon">
-                <i class="fas fa-exchange-alt"></i>
+                <i class="fas fa-sync-alt"></i>
             </div>
         </div>
     </div>
@@ -93,9 +93,9 @@
 
 
 <div class="row mt-md-3">
-    <div class="col-md-3 col-sm-6 col-12">
+    <div class="col-md-4 col-sm-6 col-12">
         <div class="info-box shadow-lg">
-            <span class="info-box-icon bg-info"><i class="fas fa-wallet"></i></span>
+            <span class="info-box-icon bg-primary"><i class="fas fa-wallet"></i></span>
             <div class="info-box-content">
                 <span class="info-box-text">Total Sales</span>
                 <span class="info-box-number"><?= counting_stats('total_sales') ?> BDT</span>
@@ -105,31 +105,22 @@
         <!-- /.info-box -->
     </div>
     <!-- /.col -->
-    <div class="col-md-3 col-sm-6 col-12">
+
+     <div class="col-md-4 col-sm-6 col-12">
         <div class="info-box shadow-lg">
-            <span class="info-box-icon bg-success"><i class="fas fa-hands-helping"></i></span>
+            <span class="info-box-icon bg-success"><i class="fab fa-creative-commons-nc"></i></span>
             <div class="info-box-content">
-                <span class="info-box-text">Total Delivery Fees Paid</span>
-                <span class="info-box-number"><?= counting_stats('total_delivery_fees_paid') ?> BDT</span>
-            </div>
-            <!-- /.info-box-content -->
-        </div>
-    <!-- /.info-box -->
-    </div>
-    <!-- /.col -->
-    <div class="col-md-3 col-sm-6 col-12">
-        <div class="info-box shadow-lg">
-            <span class="info-box-icon bg-warning"><i class="fab fa-creative-commons-nc"></i></span>
-            <div class="info-box-content">
-                <span class="info-box-text">Total unpaid amount</span>
+                <span class="info-box-text">Unpaid amount</span>
                 <span class="info-box-number"><?= counting_stats('total_delivery_fees_unpaid') ?> BDT</span>
             </div>
             <!-- /.info-box-content -->
         </div>
     <!-- /.info-box -->
     </div>
+    
+
     <!-- /.col -->
-    <div class="col-md-3 col-sm-6 col-12">
+    <div class="col-md-4 col-sm-6 col-12">
         <div class="info-box shadow-lg">
             <span class="info-box-icon bg-danger"><i class="fas fa-hourglass-half"></i></span>
             <div class="info-box-content">
@@ -141,4 +132,33 @@
         <!-- /.info-box -->
     </div>
     <!-- /.col -->
+    
+
+    <!-- /.col -->
+    <div class="col-md-4 col-sm-6 col-12">
+        <div class="info-box shadow-lg">
+            <span class="info-box-icon bg-warning"><i class="fas fa-handshake-slash"></i></span>
+            <div class="info-box-content">
+                <span class="info-box-text">Delivery Fees Due</span>
+                <span class="info-box-number"><?= counting_stats('total_delivery_fees_paid') ?> BDT</span>
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+    <!-- /.info-box -->
+    </div>
+    <!-- /.col -->
+    <div class="col-md-4 col-sm-6 col-12">
+        <div class="info-box shadow-lg">
+            <span class="info-box-icon bg-info"><i class="fas fa-percent"></i></span>
+            <div class="info-box-content">
+                <span class="info-box-text">Total COD Charge paid</span>
+                <span class="info-box-number"><?= counting_stats('total_cod_charge') ?> BDT</span>
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+    <!-- /.info-box -->
+    </div>
+   
+    
+    
 </div>
