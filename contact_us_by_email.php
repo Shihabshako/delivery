@@ -1,5 +1,5 @@
 <?php
-    include './vendor/autoload.php';
+    /*include './vendor/autoload.php';
     use PHPMailer\PHPMailer\PHPMailer;
     use PHPMailer\PHPMailer\SMTP;
     use PHPMailer\PHPMailer\Exception;
@@ -38,7 +38,19 @@
     } catch (Exception $e) {
         echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
        
-    }
+    }*/
+
+    $message = $_POST['message'];
+
+
+    $to      = 'thedeliveryguybd@gmail.com';
+    $subject = 'the subject';
+    $message = $message;
+    $headers = 'From: support@thedeliveryguy.com.bd'       . "\r\n" .
+                 'Reply-To: webmaster@example.com' . "\r\n" .
+                 'X-Mailer: PHP/' . phpversion();
+
+    echo mail($to, $subject, $message, $headers);
 
 
 
