@@ -132,9 +132,19 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="form-group col-12">
+                        <div class="form-group col-6">
                             <label >Email</label>
                             <input  class="form-control" type="email" name="email">
+                        </div>
+                        <div class="form-group col-6">
+                            <label >Phone Number</label>
+                            <input  class="form-control" type="number" name="phone_number">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-12">
+                            <label >Subject</label>
+                            <input  class="form-control" type="text" name="subject">
                         </div>
                     </div>
                     <div class="row">
